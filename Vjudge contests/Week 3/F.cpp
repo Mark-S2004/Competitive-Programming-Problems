@@ -25,18 +25,14 @@ int main()
             prefixSum[i] = prefixSum[i - 1];
     }
     prefixSum[n - 1] = prefixSum[n - 2];
-    scanf("%u", &m);
+    cin >> m;
     while (m--)
     {
-        scanf("%u %u", &l, &r);
+        cin >> l >> r;
         l--;
         r--;
         if (l)
-        {
-            printf("%u", prefixSum[r - 1]);
-            cout << prefixSum[l - 1] << endl;
             cout << prefixSum[r - 1] - prefixSum[l - 1];
-        }
         else
             cout << prefixSum[r - 1];
         cout << endl;
