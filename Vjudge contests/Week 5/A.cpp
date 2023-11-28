@@ -1,18 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/*
-void output_situation(const int &truck, stack<int> st, const int &counter)
+void passTrucks(const int truck, int &counter, stack<int> &sideStreet)
 {
-    cout << truck << "   " << counter - 1 << '\n';
-    unsigned n = st.size();
-    while (n--)
+    if (truck == counter)
     {
-        cout << "  " << st.top() << '\n';
-        st.pop();
+        counter++;
+        return;
     }
+    if (sideStreet.size() && (sideStreet.top() == counter))
+    {
+        sideStreet.pop();
+        counter++;
+        passTrucks(truck, counter, sideStreet);
+    }
+    else
+        sideStreet.push(truck);
 }
-*/
 
 int main()
 {
@@ -20,39 +24,24 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-    int n, truck, counter = 1;
-    stack<int> sideStreet;
-    cin >> n;
-    if (!n)
-        return 0;
-    while (n--)
+    int n, truck, counter;
+    while (cin >> n, n)
     {
-        cin >> truck;
-        // output_situation(truck, sideStreet, counter);
-        if (truck != counter)
+        counter = 1;
+        stack<int> sideStreet;
+        while (n--)
         {
-            if (sideStreet.size() && (sideStreet.top() == counter))
-                while (sideStreet.size() && (sideStreet.top() == counter))
-                {
-                    sideStreet.pop();
-                    counter++;
-                    // output_situation(truck, sideStreet, counter);
-                }
-            else
-                sideStreet.push(truck);
+            cin >> truck;
+            passTrucks(truck, counter, sideStreet);
         }
-        else
+        while (sideStreet.size() && (sideStreet.top() == counter))
+        {
+            sideStreet.pop();
             counter++;
+        }
+        if (sideStreet.empty())
+            cout << "yes" << '\n';
+        else
+            cout << "no" << '\n';
     }
-    cin >> truck;
-    while (sideStreet.size() && (sideStreet.top() == counter))
-    {
-        sideStreet.pop();
-        counter++;
-        // output_situation(truck, sideStreet, counter);
-    }
-    if (sideStreet.empty())
-        cout << "yes" << '\n';
-    else
-        cout << "no" << '\n';
 }
